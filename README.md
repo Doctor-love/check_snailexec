@@ -13,7 +13,7 @@ The plugin requires Python 2.7 or 2.6 with the "argparse" module installed.
 
 Example use case
 ================
-Imagine a scenario where you want to monitor a system that you can't reach directly.  
+Imagine a scenario where you want to monitor a system that you can't reached directly.  
 This could be due to strict security policies, badly configured routing or similar.  
 
 But all hope is not lost - both the monitoring and target system can reach a internal FTP server:  
