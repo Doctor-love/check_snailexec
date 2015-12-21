@@ -11,6 +11,44 @@ Installation
 ============
 The plugin requires Python 2.7 or 2.6 with the "argparse" module installed.  
 
+Example use case
+================
+Imagine a scenario where you want to monitor a system that you can't reach directly.  
+This could be due to strict security policies, badly configured routing or similar.  
+
+But all hope is not lost - both the monitoring and target system can reach a internal FTP server:  
+
+```
+
+                 Commonly accessible network
+                 +-------------------------+
+                 |                         |
+                 |  +-------------------+  |
+            +------->     FTP server    <-------+
+            |    |  +-------------------+  |    |
+            |    |                         |    |
+            |    +-------------------------+    |
+            |                                   |
+            |                 X                 |
++-------------------------+   X   +--------------------------+
+|           |             |   X   |             |            |
+|  +--------+----------+  |   X   |  +----------+--------+   |
+|  | Monitoring system |  |   X   |  |   Target system   |   |
+|  +-------------------+  |   X   |  +-------------------+   |
+|                         |   X   |                          |
++-------------------------+   X   +--------------------------+
+    Isolated network A        X        Isolated network B
+
+```
+
+The target system can run a SnailEXEC job with appropriate check plugins,  
+triggered every five minutes by something like cron and upload the  
+results file to the commonly accessible FTP server.  
+
+A script on the monitoring system downloads the results file on a scheduled basis and  
+check_snailexec treats each result in the results file as a check result!  
+
+
 Example output
 ==============
 
