@@ -7,8 +7,16 @@ target: Other
 type: Plugin
 license: gplv2
 releases: 
-  - 
-    name: 0.1
+  - name: 0.2
+    description: "0.2 Release"
+    files: 
+      - 
+        name: check_snailexec
+        url: "file:///check_snailexec.py"
+        description: "Check plugin"
+        checksum: 7b31b74df97d2e4cc3f48ca533b9126a
+
+  - name: 0.1
     description: "0.1 Release"
     files: 
       - 
