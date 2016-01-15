@@ -4,13 +4,15 @@
 
 developers = ['Joel Rangsmo <joel@rangsmo.se>']
 description = __doc__
-version = '0.1'
+version = '0.2'
 license = 'GPLv2'
 
 try:
     import json
     import time
     import argparse
+    
+    from sys import exit
 
 except ImportError as missing:
     print(
@@ -55,6 +57,11 @@ def parse_args(description=None, version=None, developers=None, license=None):
         help='Acceptable age of command result '
         'specified in seconds (default: %(default)i)',
         metavar='SECONDS', type=int, default=600)
+
+    parser.add_argument(
+        '-i', '--include-age',
+        help='Include command result age in status output',
+        action='store_true', default=True)
 
     return parser.parse_args()
 
@@ -154,6 +161,22 @@ def main():
         exit_plugin(
             'Result data for command "%s" did not include required information'
             % name)
+
+    # Exits the plugin if no result age should be added to output
+    if not args.include_age:
+        exit_plugin(output=output, state=exit_code)
+
+    # -------------------------------------------------------------------------
+    try:
+        output = output.split('|')
+
+        # Adds the data age before performance data (if any)
+        output[0] += ' (checked %i seconds ago) ' % time_diff
+
+        output = '|'.join(output)
+
+    except Exception as error_msg:
+        exit_plugin('Failed to add result age to output: "%s"' % error_msg)
 
     # -------------------------------------------------------------------------
     exit_plugin(output=output, state=exit_code)
